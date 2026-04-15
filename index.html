@@ -107,6 +107,40 @@ body {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
 }
+
+/* Quick Access CTAs */
+.quick-access { padding-top: 1.5rem; padding-bottom: .5rem; }
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .6rem;
+}
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .9rem .8rem;
+  border-radius: var(--radius);
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: transform .15s, box-shadow .15s;
+}
+.cta-btn:active { transform: scale(.97); }
+.cta-live {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255,94,58,.35);
+}
+.cta-live:hover { box-shadow: 0 6px 28px rgba(255,94,58,.5); }
+.cta-pdf {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.cta-pdf:hover { border-color: var(--r1); }
 .cd-unit {
   text-align: center;
   min-width: 52px;
@@ -413,6 +447,35 @@ body {
   border-top: 1px solid var(--border);
 }
 
+/* Iframe */
+.iframe-wrap {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #000;
+  aspect-ratio: 9/14;
+  max-height: 70vh;
+}
+.iframe-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.iframe-open {
+  display: block;
+  text-align: center;
+  margin-top: .8rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.iframe-open:hover { text-decoration: underline; }
+
+@media (min-width: 640px) {
+  .iframe-wrap { aspect-ratio: 16/10; max-height: 80vh; }
+}
+
 /* Responsive */
 @media (min-width: 640px) {
   .hero h1 { font-size: 3rem; }
@@ -452,13 +515,27 @@ body {
   <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">sec</div></div>
 </div>
 
+<!-- QUICK ACCESS -->
+<div class="section quick-access">
+  <div class="cta-grid">
+    <a href="https://chrono-course.tracktherace.com/fr/evenements-sportifs/autres/abalone-marathon-de-nantes-2026/course" target="_blank" class="cta-btn cta-live">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span>Suivi live & chronos</span>
+    </a>
+    <a href="https://a7d6aa7b-c50f-428f-8759-4054f1aa04f3.usrfiles.com/ugd/a7d6aa_b72cb70aceb74582a312f5fb35e481a7.pdf" target="_blank" class="cta-btn cta-pdf">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      <span>Guide relais (PDF)</span>
+    </a>
+  </div>
+</div>
+
 <!-- TEAM -->
 <div class="section">
   <div class="section-title">L'équipe</div>
   <div class="runners">
     <div class="runner-card" data-r="1">
       <div class="runner-num">RELAIS 1</div>
-      <div class="runner-name">Adeline</div>
+      <div class="runner-name">Johan</div>
       <div class="runner-info"><strong>10 km</strong><br>Départ → Relais A</div>
       <div class="runner-dist">10K</div>
     </div>
@@ -470,7 +547,7 @@ body {
     </div>
     <div class="runner-card" data-r="3">
       <div class="runner-num">RELAIS 3</div>
-      <div class="runner-name">Johan</div>
+      <div class="runner-name">Adeline</div>
       <div class="runner-info"><strong>9 km</strong><br>Relais B → Relais C</div>
       <div class="runner-dist">9K</div>
     </div>
@@ -502,7 +579,7 @@ body {
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">08h00</div>
-      <div class="tl-label">🔵 Adeline → navette vers le départ</div>
+      <div class="tl-label">🔵 Johan → navette vers le départ</div>
       <div class="tl-desc">Navette Beaujoire → Nefs des Machines de l'Île</div>
     </div>
     <div class="tl-item">
@@ -514,7 +591,7 @@ body {
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-time">08h30</div>
-      <div class="tl-label">🟢 Johan → tram vers Relais B</div>
+      <div class="tl-label">🟢 Adeline → tram vers Relais B</div>
       <div class="tl-desc">Tram L1 dir. François Mitterrand → arrêt Duchesse Anne + 12 min marche</div>
     </div>
     <div class="tl-item highlight">
@@ -554,7 +631,7 @@ body {
       <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
         <div class="relay-badge">R1</div>
         <div class="relay-header-info">
-          <div class="relay-header-name">Adeline — 10 km</div>
+          <div class="relay-header-name">Johan — 10 km</div>
           <div class="relay-header-sub">Départ → Point Relais A</div>
         </div>
         <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -592,7 +669,7 @@ body {
       <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
         <div class="relay-badge">R3</div>
         <div class="relay-header-info">
-          <div class="relay-header-name">Johan — 9 km</div>
+          <div class="relay-header-name">Adeline — 9 km</div>
           <div class="relay-header-sub">Point Relais B → Point Relais C</div>
         </div>
         <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -663,51 +740,13 @@ body {
   </div>
 </div>
 
-<!-- LINKS -->
+<!-- LIVE TRACKING -->
 <div class="section">
-  <div class="section-title">Liens utiles</div>
-  <div class="link-grid">
-    <a href="https://marathondenantes.com" target="_blank" class="link-card">
-      <div class="link-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      </div>
-      <div class="link-card-info">
-        <div class="link-card-title">Site officiel</div>
-        <div class="link-card-desc">marathondenantes.com — infos, FAQ, espace coureur</div>
-      </div>
-      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    <a href="https://marathondenantes.com" target="_blank" class="link-card">
-      <div class="link-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r1)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </div>
-      <div class="link-card-info">
-        <div class="link-card-title">Suivi live GPS</div>
-        <div class="link-card-desc">Suivez la progression de l'équipe en temps réel (dispo le jour J)</div>
-      </div>
-      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    <a href="https://marathondenantes.com" target="_blank" class="link-card">
-      <div class="link-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r2)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div class="link-card-info">
-        <div class="link-card-title">Espace coureur</div>
-        <div class="link-card-desc">Dossier, carte de retrait dossard, infos personnelles</div>
-      </div>
-      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    <a href="https://www.instagram.com/marathondenantes/" target="_blank" class="link-card">
-      <div class="link-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r3)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="var(--r3)"/></svg>
-      </div>
-      <div class="link-card-info">
-        <div class="link-card-title">Instagram</div>
-        <div class="link-card-desc">@marathondenantes — #MARATHONNANTES</div>
-      </div>
-      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+  <div class="section-title">Suivi live</div>
+  <div class="iframe-wrap">
+    <iframe src="https://chrono-course.tracktherace.com/fr/evenements-sportifs/autres/abalone-marathon-de-nantes-2026/course" allowfullscreen loading="lazy"></iframe>
   </div>
+  <a href="https://chrono-course.tracktherace.com/fr/evenements-sportifs/autres/abalone-marathon-de-nantes-2026/course" target="_blank" class="iframe-open">Ouvrir en plein écran ↗</a>
 </div>
 
 <!-- FOOTER -->
