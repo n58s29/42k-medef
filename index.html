@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDEF44 — Marathon Relais Nantes 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0f14;
+  --surface: #151921;
+  --surface2: #1c2230;
+  --border: #2a3040;
+  --text: #e8ecf4;
+  --text-dim: #8892a4;
+  --accent: #ff5e3a;
+  --accent-glow: rgba(255, 94, 58, 0.15);
+  --r1: #38bdf8;
+  --r2: #a78bfa;
+  --r3: #34d399;
+  --r4: #fb923c;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(165deg, #1a1028 0%, #0c0f14 40%, #0a1520 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,94,58,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .35rem .9rem;
+  border-radius: 99px;
+  background: var(--accent-glow);
+  border: 1px solid rgba(255,94,58,0.25);
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  margin-bottom: .5rem;
+}
+.hero h1 span { color: var(--accent); }
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-dim);
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: .85rem;
+  font-weight: 500;
+}
+.hero-meta div {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.hero-meta svg { opacity: .5; }
+
+/* Countdown */
+.countdown-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.cd-unit {
+  text-align: center;
+  min-width: 52px;
+}
+.cd-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.cd-label {
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+}
+
+/* Sections */
+.section { padding: 2rem 1.5rem; }
+.section-title {
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--text-dim);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Runner Cards */
+.runners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+}
+.runner-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform .2s;
+}
+.runner-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.runner-card[data-r="1"]::before { background: var(--r1); }
+.runner-card[data-r="2"]::before { background: var(--r2); }
+.runner-card[data-r="3"]::before { background: var(--r3); }
+.runner-card[data-r="4"]::before { background: var(--r4); }
+
+.runner-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .05em;
+  margin-bottom: .3rem;
+}
+.runner-card[data-r="1"] .runner-num { color: var(--r1); }
+.runner-card[data-r="2"] .runner-num { color: var(--r2); }
+.runner-card[data-r="3"] .runner-num { color: var(--r3); }
+.runner-card[data-r="4"] .runner-num { color: var(--r4); }
+
+.runner-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: .6rem;
+}
+.runner-dist {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  opacity: .15;
+  position: absolute;
+  bottom: .4rem;
+  right: .8rem;
+}
+.runner-info {
+  font-size: .75rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+.runner-info strong { color: var(--text); font-weight: 600; }
+
+/* Timeline */
+.timeline { position: relative; }
+.tl-item {
+  position: relative;
+  padding: 0 0 1.5rem 2.2rem;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+.tl-item:last-child::before { display: none; }
+.tl-dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+}
+.tl-item.highlight .tl-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(255,94,58,0.4);
+}
+.tl-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: .15rem;
+}
+.tl-label {
+  font-size: .85rem;
+  font-weight: 600;
+}
+.tl-desc {
+  font-size: .75rem;
+  color: var(--text-dim);
+  margin-top: .1rem;
+}
+
+/* Relay Detail Accordion */
+.relay-details { display: flex; flex-direction: column; gap: .6rem; }
+.relay-block {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.relay-header {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.relay-header:hover { background: var(--surface2); }
+.relay-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.relay-block[data-r="1"] .relay-badge { background: var(--r1); }
+.relay-block[data-r="2"] .relay-badge { background: var(--r2); }
+.relay-block[data-r="3"] .relay-badge { background: var(--r3); }
+.relay-block[data-r="4"] .relay-badge { background: var(--r4); }
+
+.relay-header-info { flex: 1; }
+.relay-header-name { font-weight: 700; font-size: .95rem; }
+.relay-header-sub { font-size: .75rem; color: var(--text-dim); }
+.relay-chevron {
+  transition: transform .25s;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.relay-block.open .relay-chevron { transform: rotate(180deg); }
+.relay-body {
+  display: none;
+  padding: 0 1.2rem 1.2rem;
+}
+.relay-block.open .relay-body { display: block; }
+
+.info-row {
+  display: flex;
+  gap: .6rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+  align-items: flex-start;
+}
+.info-row:last-child { border-bottom: none; }
+.info-icon {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+  opacity: .5;
+  padding-top: 1px;
+}
+.info-label { color: var(--text-dim); min-width: 70px; flex-shrink: 0; }
+.info-value { font-weight: 500; }
+
+/* Alert box */
+.alert-box {
+  background: rgba(255, 94, 58, 0.08);
+  border: 1px solid rgba(255, 94, 58, 0.2);
+  border-radius: var(--radius-sm);
+  padding: .8rem 1rem;
+  margin-top: .8rem;
+  font-size: .78rem;
+  line-height: 1.5;
+  color: #ffb09a;
+}
+.alert-box strong { color: var(--accent); }
+
+/* Links */
+.link-grid {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: background .15s, border-color .15s;
+}
+.link-card:hover {
+  background: var(--surface2);
+  border-color: rgba(255,94,58,.3);
+}
+.link-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.link-card-info { flex: 1; }
+.link-card-title { font-weight: 600; font-size: .9rem; }
+.link-card-desc { font-size: .72rem; color: var(--text-dim); }
+.link-arrow { color: var(--text-dim); flex-shrink: 0; }
+
+/* Transport */
+.transport-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  margin-bottom: .6rem;
+}
+.transport-card h3 {
+  font-size: .85rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.transport-card p {
+  font-size: .78rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.transport-card p strong { color: var(--text); }
+
+.tip {
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: var(--radius-sm);
+  padding: .8rem 1rem;
+  font-size: .78rem;
+  color: #86efbf;
+  line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: .7rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+  .hero h1 { font-size: 3rem; }
+  .section { padding: 2.5rem 2rem; max-width: 640px; margin: 0 auto; }
+  .countdown-bar { gap: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏃 Équipe MEDEF44</div>
+  <h1>Marathon Relais<br><span>Nantes 2026</span></h1>
+  <p class="hero-sub">Harmonie Mutuelle — 42 km à 4</p>
+  <div class="hero-meta">
+    <div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Dim. 26 avril
+    </div>
+    <div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Départ 9h15
+    </div>
+    <div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Nefs des Machines
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar" id="countdown">
+  <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">jours</div></div>
+  <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">heures</div></div>
+  <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">min</div></div>
+  <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">sec</div></div>
+</div>
+
+<!-- TEAM -->
+<div class="section">
+  <div class="section-title">L'équipe</div>
+  <div class="runners">
+    <div class="runner-card" data-r="1">
+      <div class="runner-num">RELAIS 1</div>
+      <div class="runner-name">Adeline</div>
+      <div class="runner-info"><strong>10 km</strong><br>Départ → Relais A</div>
+      <div class="runner-dist">10K</div>
+    </div>
+    <div class="runner-card" data-r="2">
+      <div class="runner-num">RELAIS 2</div>
+      <div class="runner-name">Dominique</div>
+      <div class="runner-info"><strong>11 km</strong><br>Relais A → Relais B</div>
+      <div class="runner-dist">11K</div>
+    </div>
+    <div class="runner-card" data-r="3">
+      <div class="runner-num">RELAIS 3</div>
+      <div class="runner-name">Johan</div>
+      <div class="runner-info"><strong>9 km</strong><br>Relais B → Relais C</div>
+      <div class="runner-dist">9K</div>
+    </div>
+    <div class="runner-card" data-r="4">
+      <div class="runner-num">RELAIS 4</div>
+      <div class="runner-name">Mathieu</div>
+      <div class="runner-info"><strong>12 km</strong><br>Relais C → Arrivée 🌊</div>
+      <div class="runner-dist">12K</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="section">
+  <div class="section-title">Timeline jour J</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">07h00</div>
+      <div class="tl-label">RDV Beaujoire — Espace Relais</div>
+      <div class="tl-desc">Petit-déj sportif + dépôt consignes. Bracelet obligatoire.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">07h45</div>
+      <div class="tl-label">Briefing d'avant-course</div>
+      <div class="tl-desc">Infos essentielles jour J — à ne pas louper !</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">08h00</div>
+      <div class="tl-label">🔵 Adeline → navette vers le départ</div>
+      <div class="tl-desc">Navette Beaujoire → Nefs des Machines de l'Île</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">08h30</div>
+      <div class="tl-label">🟣 Dominique → navette vers Relais A</div>
+      <div class="tl-desc">Navette Beaujoire → point de relais A (H Arena)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">08h30</div>
+      <div class="tl-label">🟢 Johan → tram vers Relais B</div>
+      <div class="tl-desc">Tram L1 dir. François Mitterrand → arrêt Duchesse Anne + 12 min marche</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-dot"></div>
+      <div class="tl-time">09h15</div>
+      <div class="tl-label">🔥 DÉPART !</div>
+      <div class="tl-desc">Marathon Relais Harmonie Mutuelle — C'est parti !</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">10h00</div>
+      <div class="tl-label">🟠 Mathieu → navette vers Relais C</div>
+      <div class="tl-desc">Navette Beaujoire → place du Général Mellinet (7 min marche)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">~10h30</div>
+      <div class="tl-label">Retour des premiers coureurs</div>
+      <div class="tl-desc">Cocktail, animations, photobooth à l'Espace Relais</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">13h00</div>
+      <div class="tl-label">Podium Relais</div>
+      <div class="tl-desc">Remise des prix à l'Espace Relais Entreprises</div>
+    </div>
+  </div>
+</div>
+
+<!-- RELAY DETAILS -->
+<div class="section">
+  <div class="section-title">Détail par relayeur</div>
+  <div class="relay-details">
+
+    <!-- R1 -->
+    <div class="relay-block" data-r="1">
+      <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="relay-badge">R1</div>
+        <div class="relay-header-info">
+          <div class="relay-header-name">Adeline — 10 km</div>
+          <div class="relay-header-sub">Départ → Point Relais A</div>
+        </div>
+        <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="relay-body">
+        <div class="info-row"><span class="info-icon">🚌</span><span class="info-label">Aller</span><span class="info-value">Navette à 8h00 depuis Beaujoire → Nefs des Machines</span></div>
+        <div class="info-row"><span class="info-icon">🏁</span><span class="info-label">Départ</span><span class="info-value">9h15 — SAS entre -3h15 et +4h15 (libre)</span></div>
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-label">Arrivée relais</span><span class="info-value">Point Relais A — Transmettre GPS + ceinture pucée</span></div>
+        <div class="info-row"><span class="info-icon">🚌</span><span class="info-label">Retour</span><span class="info-value">Navettes retour entre 10h et 10h45 (Relais A → Beaujoire)</span></div>
+        <div class="info-row"><span class="info-icon">📝</span><span class="info-label">Note</span><span class="info-value">Navettes retour au 9 rue Viviani, devant la H Arena (~5 min marche)</span></div>
+      </div>
+    </div>
+
+    <!-- R2 -->
+    <div class="relay-block" data-r="2">
+      <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="relay-badge">R2</div>
+        <div class="relay-header-info">
+          <div class="relay-header-name">Dominique — 11 km</div>
+          <div class="relay-header-sub">Point Relais A → Point Relais B</div>
+        </div>
+        <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="relay-body">
+        <div class="info-row"><span class="info-icon">🚌</span><span class="info-label">Aller</span><span class="info-value">Navette à 8h30 depuis Beaujoire → Point Relais A (H Arena)</span></div>
+        <div class="info-row"><span class="info-icon">🏃</span><span class="info-label">Course</span><span class="info-value">11 km — Relais A → Relais B</span></div>
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-label">Fin</span><span class="info-value">Point Relais B — Transmettre GPS + ceinture pucée</span></div>
+        <div class="info-row"><span class="info-icon">🚋</span><span class="info-label">Retour</span><span class="info-value">Tramway L1 depuis Duchesse Anne → Beaujoire (~12 min marche jusqu'à l'arrêt)</span></div>
+        <div class="alert-box">💡 <strong>Transports gratuits le week-end</strong> à Nantes !</div>
+      </div>
+    </div>
+
+    <!-- R3 -->
+    <div class="relay-block" data-r="3">
+      <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="relay-badge">R3</div>
+        <div class="relay-header-info">
+          <div class="relay-header-name">Johan — 9 km</div>
+          <div class="relay-header-sub">Point Relais B → Point Relais C</div>
+        </div>
+        <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="relay-body">
+        <div class="info-row"><span class="info-icon">🚋</span><span class="info-label">Aller</span><span class="info-value">Tram L1 dir. François Mitterrand à 8h41 ou 9h09 → arrêt Duchesse Anne</span></div>
+        <div class="info-row"><span class="info-icon">🚶</span><span class="info-label">Marche</span><span class="info-value">~12 min à pied de l'arrêt jusqu'au Point Relais B</span></div>
+        <div class="info-row"><span class="info-icon">🏃</span><span class="info-label">Course</span><span class="info-value">9 km — Relais B → Relais C</span></div>
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-label">Fin</span><span class="info-value">Point Relais C — Transmettre GPS + ceinture pucée</span></div>
+        <div class="info-row"><span class="info-icon">🚌</span><span class="info-label">Retour</span><span class="info-value">Navettes retour entre 11h30 et 12h45 (place du Gén. Mellinet, ~7 min marche)</span></div>
+      </div>
+    </div>
+
+    <!-- R4 -->
+    <div class="relay-block" data-r="4">
+      <div class="relay-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="relay-badge">R4</div>
+        <div class="relay-header-info">
+          <div class="relay-header-name">Mathieu — 12 km</div>
+          <div class="relay-header-sub">Point Relais C → Arrivée Beaujoire 🌊</div>
+        </div>
+        <svg class="relay-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="relay-body">
+        <div class="info-row"><span class="info-icon">🚌</span><span class="info-label">Aller</span><span class="info-value">Navette à 10h00 depuis Beaujoire → place du Gén. Mellinet (~7 min marche)</span></div>
+        <div class="info-row"><span class="info-icon">🏃</span><span class="info-label">Course</span><span class="info-value">12 km — Relais C → Arrivée Hall XXL Beaujoire</span></div>
+        <div class="info-row"><span class="info-icon">🌊</span><span class="info-label">Traversante</span><span class="info-value">324 m sur pontons flottants sur l'Erdre — moment unique !</span></div>
+        <div class="info-row"><span class="info-icon">🏅</span><span class="info-label">Arrivée</span><span class="info-value">Seul R4 franchit la ligne. Médailles à l'Espace Relais contre remise GPS + ceinture.</span></div>
+        <div class="alert-box">
+          <strong>⚠️ Traversante flottante :</strong> seul le relayeur 4 passe. Interdit de s'arrêter, pas de public, pas de déchets. Tout écart = disqualification.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ESSENTIALS -->
+<div class="section">
+  <div class="section-title">À ne pas oublier</div>
+  <div class="transport-card">
+    <h3>🎽 Dossards & équipement</h3>
+    <p>
+      Chaque coureur a : <strong>1 dossard pectoral</strong> (inscrire nom+prénom) + <strong>1 dossard dos</strong> (pour se distinguer du marathon individuel) + <strong>1 bracelet</strong> (obligatoire pour l'Espace Relais + navettes) + <strong>1 t-shirt officiel</strong>.<br><br>
+      <strong>Nouveauté :</strong> 1 balise GPS + 1 dossard pucé avec ceinture porte-dossard → sert de <strong>témoin</strong> à transmettre à chaque relais !
+    </p>
+  </div>
+  <div class="transport-card">
+    <h3>📦 Retrait dossards</h3>
+    <p>
+      <strong>Vendredi 24 avril</strong> 15h–19h ou <strong>Samedi 25 avril</strong> 10h–19h<br>
+      Parc des Expos Beaujoire — Hall XXL<br>
+      Carte de retrait (espace coureur) + pièce d'identité<br>
+      <strong>⚠️ Aucun dossard remis le dimanche ni par La Poste !</strong>
+    </p>
+  </div>
+  <div class="transport-card">
+    <h3>🚋 Accès Beaujoire</h3>
+    <p>
+      <strong>Tram L1</strong> → arrêt Beaujoire ou Ranzay (5-8 min à pied)<br>
+      <strong>Bus 75</strong> → arrêt Beaujoire · <strong>Bus 80</strong> → arrêt Batignolles<br>
+      <strong>Chronobus C6</strong> → arrêt Beaujoire<br><br>
+      💡 <strong>Transports gratuits le week-end à Nantes</strong>
+    </p>
+  </div>
+  <div class="tip" style="margin-top:.6rem">
+    ♻️ Pensez à porter des vêtements à donner (collecte Secours Populaire au départ). Pas de tube de gel jeté sur le parcours !
+  </div>
+</div>
+
+<!-- LINKS -->
+<div class="section">
+  <div class="section-title">Liens utiles</div>
+  <div class="link-grid">
+    <a href="https://marathondenantes.com" target="_blank" class="link-card">
+      <div class="link-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div class="link-card-info">
+        <div class="link-card-title">Site officiel</div>
+        <div class="link-card-desc">marathondenantes.com — infos, FAQ, espace coureur</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://marathondenantes.com" target="_blank" class="link-card">
+      <div class="link-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r1)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="link-card-info">
+        <div class="link-card-title">Suivi live GPS</div>
+        <div class="link-card-desc">Suivez la progression de l'équipe en temps réel (dispo le jour J)</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://marathondenantes.com" target="_blank" class="link-card">
+      <div class="link-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r2)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="link-card-info">
+        <div class="link-card-title">Espace coureur</div>
+        <div class="link-card-desc">Dossier, carte de retrait dossard, infos personnelles</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://www.instagram.com/marathondenantes/" target="_blank" class="link-card">
+      <div class="link-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--r3)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="var(--r3)"/></svg>
+      </div>
+      <div class="link-card-info">
+        <div class="link-card-title">Instagram</div>
+        <div class="link-card-desc">@marathondenantes — #MARATHONNANTES</div>
+      </div>
+      <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  MEDEF44 × Marathon Relais Nantes 2026<br>
+  Page compagnon · Bonne course à tous ! 🔥
+</div>
+
+<script>
+// Countdown to race start: Sunday April 26 2026 at 09:15 CEST (UTC+2)
+function updateCountdown() {
+  const target = new Date('2026-04-26T09:15:00+02:00').getTime();
+  const now = Date.now();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    document.getElementById('cd-d').textContent = '0';
+    document.getElementById('cd-h').textContent = '0';
+    document.getElementById('cd-m').textContent = '0';
+    document.getElementById('cd-s').textContent = '0';
+    return;
+  }
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('cd-d').textContent = d;
+  document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Open first relay by default
+document.querySelector('.relay-block').classList.add('open');
+</script>
+
+</body>
+</html>
